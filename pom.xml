@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 <!--root parent for microservices-->
+<!--  get this from the pom generated from spring intializr-->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -17,6 +18,7 @@
   <url>http://maven.apache.org</url>
   <modules>
     <module>user-service</module>
+    <module>device-service</module>
   </modules>
 
   <build>
