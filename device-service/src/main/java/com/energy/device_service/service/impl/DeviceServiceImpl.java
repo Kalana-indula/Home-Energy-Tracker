@@ -3,6 +3,7 @@ package com.energy.device_service.service.impl;
 import com.energy.device_service.dto.DeviceDto;
 import com.energy.device_service.dto.response.SingleEntityResponse;
 import com.energy.device_service.entity.Device;
+import com.energy.device_service.exception.DeviceNotFoundException;
 import com.energy.device_service.repository.DeviceRepository;
 import com.energy.device_service.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,51 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public SingleEntityResponse<DeviceDto> getDeviceById(Long id) {
-        return null;
+
+        SingleEntityResponse<DeviceDto> response = new SingleEntityResponse<>();
+
+        Device existingDevice=deviceRepository.findById(id)
+                .orElseThrow(()->new DeviceNotFoundException("Device ID : "+id+" not found"));
+
+        response.setData(getDeviceDto(existingDevice));
+        response.setMessage("Device found successfully");
+
+        return response;
     }
 
     @Override
     public SingleEntityResponse<DeviceDto> updateDevice(Long id, Device device) {
-        return null;
+
+        SingleEntityResponse<DeviceDto> response = new SingleEntityResponse<>();
+
+        Device existingDevice=deviceRepository.findById(id)
+                .orElseThrow(()->new DeviceNotFoundException("Device ID : "+id+" not found"));
+
+        existingDevice.setName(device.getName());
+        existingDevice.setType(device.getType());
+        existingDevice.setLocation(device.getLocation());
+        existingDevice.setUserId(device.getUserId());
+
+        response.setData(getDeviceDto(existingDevice));
+        response.setMessage("Device updated successfully");
+
+        return response;
     }
 
     @Override
     public SingleEntityResponse<DeviceDto> deleteDevice(Long id) {
-        return null;
+
+        SingleEntityResponse<DeviceDto> response = new SingleEntityResponse<>();
+
+        boolean isExist=deviceRepository.existsById(id);
+
+        if(!isExist){
+            throw new DeviceNotFoundException("Device ID : "+id+" not found");
+        }
+
+        response.setMessage("Device deleted successfully");
+
+        return response;
     }
 
     private DeviceDto getDeviceDto(Device device) {
