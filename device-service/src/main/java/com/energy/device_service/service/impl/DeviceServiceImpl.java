@@ -59,7 +59,9 @@ public class DeviceServiceImpl implements DeviceService {
         existingDevice.setLocation(device.getLocation());
         existingDevice.setUserId(device.getUserId());
 
-        response.setData(getDeviceDto(existingDevice));
+        Device updateDevice=deviceRepository.save(existingDevice);
+
+        response.setData(getDeviceDto(updateDevice));
         response.setMessage("Device updated successfully");
 
         return response;

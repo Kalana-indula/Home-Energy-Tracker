@@ -47,6 +47,14 @@ public class DeviceController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+//    delete device
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteDevice(@PathVariable Long id){
+        SingleEntityResponse<DeviceDto> response=deviceService.deleteDevice(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 //    methods
 //    get device by id
  //  create device
